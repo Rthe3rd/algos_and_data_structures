@@ -28,4 +28,15 @@ def car_fleets(target, position, speed):
 
     return time_speed
 
-print(car_fleets(12, [10,8,0,5,3], [2,4,1,1,3]))
+
+
+def car_fleet(target, position, speed):
+    pair = [[p,s] for p,s in zip(position, speed)]
+    stack = []
+    for position, speed in sorted(pair)[::-1]: # Reverse sorted order
+        stack.append((target - position) / speed)
+        if len(stack) >= 2 and stack[-1] <= stack[-2]:
+            stack.pop()
+    return len(stack)
+
+print(car_fleet(12, [10,8,0,5,3], [2,4,1,1,3]))
