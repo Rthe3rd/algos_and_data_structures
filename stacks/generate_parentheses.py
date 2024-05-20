@@ -30,4 +30,4 @@ def generate_parantheses(n_pairs):
     return results
 
 
-print(generate_parantheses(1))
+print(generate_parantheses(2))
