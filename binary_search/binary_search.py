@@ -7,7 +7,6 @@ import math
 def binary_search(nums, target):
     left = 0
     right = len(nums)-1
-    middle = 0
 
     while left <= right:
         middle = (right + left)//2
