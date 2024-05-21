@@ -40,3 +40,4 @@ def car_fleet(target, position, speed):
     return len(stack)
 
 print(car_fleet(12, [10,8,0,5,3], [2,4,1,1,3]))
+print(car_fleet(10, [6,8], [3,2]))
