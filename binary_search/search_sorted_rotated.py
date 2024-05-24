@@ -26,7 +26,7 @@ def search_sorted_rotated(nums, target):
         else:
             # since we are in the right sorted portion, values increase right to left
             # target < nums[mid_point] => value at the mid_point is larger than the target => search the left => move the right pointer
-            # target > nums[right] => target value is greater than our than our right most/greatest value in the right sorted portion => search left (it's not in the right!) => more right pointer
+            # target > nums[right] => target value is greater than our than our right most/greatest value in the right sorted portion => search left (it's not in the right!) => move right pointer
             if target < nums[mid_point] or target > nums[right]:
                 right = mid_point - 1
             # 
