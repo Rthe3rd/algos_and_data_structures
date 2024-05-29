@@ -4,19 +4,19 @@
 
 
 def longest_repeating_character_replacement(string, k):
-    count = {}
     result = 0
     left = 0
+    count = {}
     max_frequency = 0
     for right in range(len(string)):
         count[string[right]] = 1 + count.get(string[right], 0)
         max_frequency = max(max_frequency, count[string[right]])
         # Either loop is valid, max value does not need to be updated
         # while right - left + 1 - max(count.values()) > k:
-        while (right - left + 1) - max_frequency > k:
+        while right - left + 1 - max_frequency > k:
             count[string[left]] -= 1
             left += 1            
-        result = max(right - left + 1, result)
+    result = max(right - left + 1, result)
     return result
 
 s1 = "ABAB" 
@@ -30,7 +30,10 @@ k2 = 1
 # Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
 # The substring "BBBB" has the longest repeating letters, which is 4.
 # There may exists other ways to achieve this answer too.
+s3 = "AAAABAAAB"
+k3 = 2
 
 
 print(longest_repeating_character_replacement(s1, k1))
 print(longest_repeating_character_replacement(s2, k2))
+print(longest_repeating_character_replacement(s3, k3))
