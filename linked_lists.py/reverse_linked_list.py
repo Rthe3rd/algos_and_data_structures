@@ -33,10 +33,27 @@ class LinkedList():
             print(current.value)
             current = current.next
 
+class Solution(object):
+    #     let current = head
+    #     let previous = null
 
-def reverse_linked_list(head):
-    current = head
-    prev = None
-    if not head:
-        return []
-    
+    # while(current){
+    #     let temp = current.next
+    #     current.next = previous
+    #     previous = current
+    #     current = temp
+    # }
+    # return previous  
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        current = head
+        before = None
+        while current:
+            after = current.next
+            current.next = before
+            before = current
+            current = after
+        return before
