@@ -14,7 +14,7 @@ def generate_parantheses(n_pairs):
         if number_of_open == number_of_closed == n_pairs:
             results.append("".join(stack))
             return
-        
+
         if number_of_open < n_pairs:
             stack.append("(")
             assemble_parantheses(number_of_open + 1, number_of_closed)

@@ -32,8 +32,11 @@ class Solution(object):
         :rtype: bool
         """
         current_p, current_q = p, q
+        # if they both don't exist, empty tree or bottom of the tree, return true
         if not current_p and not current_q:
             return True
+        # if ONE doesn't exist OR if they aren't equal, return false
         if not current_p or not current_q or current_p.val != current_q.val:
             return False
+        # if the right node from both trees and the left from both return true, return true 
         return self.isSameTree(current_p.right, current_q.right) and self.isSameTree(current_p.left, current_q.left)

@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+from collections import deque
 class TreeNode(object):
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -10,8 +11,7 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if root == None:
-            return 0
+        if root == None: return 0
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
 
@@ -19,9 +19,10 @@ class Solution(object):
 
         if not root:
             return 0
-
         level = 0
+        # use a dequeue collections.deque
         queue = [root]
+        # deque = deque()
 
         while queue:
             for i in range(len(queue)):
@@ -32,3 +33,4 @@ class Solution(object):
                     queue.append(current_root.right)
             level += 1
         return level
+
