@@ -168,7 +168,74 @@ class LinkedList(object):
         left_prev.next.next = current
         left_prev.next = prev
         return dummy.next
-        
+
+    def merge_k_sorted_lists(self, lists):
+        # edge cases
+        if not lists or len(lists) == 0:
+            return None
+        while len(lists) > 1:
+            merged_lists = []
+            # loop in pairs with edge case if you have an odd lengthed list
+            for i in range(0, len(list), 2):
+                list_1 = lists[i]
+                list_2 = lists[i + 1] if i + 1 < len(lists) else None
+                merged_lists.append(self.merge_two_sorted_lists(list_1, list_2))
+            lists = merged_lists
+        return merged_lists[0]
+
+    def merge_two_sorted_lists(list_1, list_2):
+        dummy = ListNode()
+        current = dummy
+        while list_1 and list_2:
+            if list_1.val < list_2.val:
+                current.next = list_1 
+            else:
+                current.next = list_2 
+                list_2 = list_2.next
+            current = current.next  
+        if list_1:
+            current.next = list_1
+        if list_2:
+            current.next = list_2
+        return dummy.next
+    
+    def reverse_nodes_in_k_groups(self, head, k):
+        # edge cases
+        if not head or not head.next:
+            return head
+        # pointers/nodes that will reverse portions of the list
+        # dummy node
+        dummy = ListNode(None, head)
+        # will need a pointer that points to the node right before the start of the group that is being reversed
+        group_prev = dummy
+
+        while True:
+            kth = self.get_kth(group_prev, k)
+            if not kth:
+                break
+            group_next = kth.next
+
+            # reverse group
+            prev = kth.next
+            current = group_prev.next
+            while current != group_next:
+                ahead = current.next
+                current.next = prev
+                prev = current
+                current = ahead
+            # first node in our group
+            temp = group_prev.next
+            # put kth at the beginning of the group
+            group_prev.next = kth
+            group_prev = temp
+        return dummy.next
+
+    # Helper to get the kth node
+    def get_kth(self, curr, k):
+        while curr and k > 0:
+            curr = curr.next
+            k -= 1
+        return curr
 
 class ListNode(object):
     def __init__(self, val=0, next=None):
@@ -180,6 +247,6 @@ linked_list.add_node(2)
 linked_list.add_node(3)
 linked_list.add_node(4)
 linked_list.add_node(5)
-print(linked_list.reverse_list_two(linked_list.head, 1, 5))
+print(linked_list.reverse_nodes_in_k_groups(linked_list.head, 1))
 print('+++++++++')
 linked_list.print_nodes()
