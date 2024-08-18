@@ -1,10 +1,16 @@
-# Review the leet code easy problems for trees
+# Review the leet code problems for trees
 # 1. Invert Binary Tree
 # 2. Maximim Depth of Binary Tree
 # 3. Diameter of Binary Tree
 # 4. Balanced Binary Tree
 # 5. Same Tree
 # 6. Subtree of another Tree
+
+class TreeNode(object):
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
 
 # 2. maxDepth
 # Two ways to do this: Depth First Search and Level Order Traversal
@@ -182,3 +188,108 @@ def isValidBST(self, root):
             return False
         return helper(root.left, lower_bound, root.val) and helper(root.right, root.val, upper_bound)
     return helper(root)
+
+def kthSmallest(self, root, k):
+    nodes_seen = []
+    nodes_in_order = []
+    def helper(root):
+        # once you've passed the last node on the path, go back up 
+        if not root:
+            return
+        # append the root you've visited
+        nodes_seen.append(root)
+        # traverse left.  You will traverse left until until you can't move left 
+        helper(root.left)
+        # the last value in the list is "the furthest left" node, which is the smallest node seen, at that time.  
+        # It's not necessarily the bottom left node, it's simply the node that's furthest left at that point of time
+        nodes_in_order.append(nodes_seen.pop())
+        # move right
+        helper(root.right)
+        # return all the nodes in order
+        return nodes_in_order
+    return helper(root)[k-1].val
+
+def buildTree(self, preorder, inorder):
+    # the first value of the pre-order traversal is always the root
+    root = preorder[0]
+    # the position of the root in the in-order traversal is the divider of all nodes in the left tree vs in the right tree
+    # thus, we need to find this position in each iteration to determine what will be in the left and right trees
+    root_index = inorder.index(root)
+    # everything from the root after the root to the index of the root in the pre-order traversal is in the left side of the tree 
+    # everything in the left tree will be on the left side of the root in the in-order traversal
+    root.left = self.build(preorder[:root_index + 1], inorder[:root_index])
+    root.right = self.build(preorder[root_index + 1:], inorder[root_index +1:])
+    return root
+
+def maxPathSum(selr, root):
+    result = [root.val]
+
+    def helper(root):
+        if not root:
+            return 0
+        # return: the value of the max path if we were to split at the node and thus you need the max paths of the left and right subtrees, recursively
+        # compute: max sum splitting at the current root
+        max_path_left = helper(root.left)
+        max_path_right = helper(root.right)
+        # nodes can be negative and thus we do not want to add them to our path's sum if that is the case
+        max_path_left = max(max_path_left, 0)
+        max_path_right = max(max_path_right, 0)
+        
+        # compute max path with splitting
+        result[0] = max(result[0], root.val + max_path_left, max_path_right)
+
+        # max path NOT splitting = root.val + max_path_left + max_path_right
+        return root.val + max(max_path_left, max_path_right)
+    
+    helper(root)
+    return result[0]
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
+        """
+        if not root:
+            return ''
+        string = ''
+        result = []
+        def helper(root, string):
+            if root == None:
+                # when you reach the bottom, you've found a null node, add "N" for null
+                string += "N,"
+                result.append("N")
+                return string
+            string += f'{int(root.val)},'
+            result.append(int(root.val))
+            helper(root.left)
+            helper(root.right)
+            return string
+        helper(root)
+        return ",". join(result)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+        
+        :type data: str
+        :rtype: TreeNode
+        """
+        # incoming data is a string delimited by commas
+        vals = data.splt(',')
+        # posiition is going to start at 0 => first value in the new vals array 
+        self.i = 0
+        def dfs():
+            # base case of finding an encoded Null value => empty tree or end of the tree
+            if vals[self.i] == 'N':
+                # increment i
+                self.i += 1
+                return None
+            # create root node for current subtree
+            node = TreeNode(int(vals[self.i]))
+            self.i += 1
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        return dfs()
