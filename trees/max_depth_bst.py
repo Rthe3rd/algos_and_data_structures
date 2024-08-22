@@ -33,4 +33,3 @@ class Solution(object):
                     queue.append(current_root.right)
             level += 1
         return level
-
