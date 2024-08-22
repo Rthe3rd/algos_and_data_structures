@@ -1,3 +1,6 @@
+# Permutations of an array
+# [1, 2 ,3] => [[1, 2, 3], [2, 1, 3], [2, 3, 1], [1, 3, 2], [3, 1, 2], [3, 2, 1]]
+
 def permute(nums):
     """
     :type nums: List[int]
@@ -20,24 +23,23 @@ def permute(nums):
             results.append(p_copy)
     return results
 
+def permute_dfs(nums):
+    if not nums:
+        return []
 
-    # def dfs_helper(i):
-    #     # base cases
-    #     # Case 2: If our index is out of bounds
-    #     if current_combo == len(nums):
-    #         results.append(current_combo[:])
-    #         return
-        
-    #     popped_val = nums.pop(0)
-    #     current_combo.append(popped_val)
+    results = []
+    current_perm = []
+    def dfs():
+        if len(current_perm) == len(nums):
+            results.append(current_perm[:])
+            return
 
-    #     dfs_helper(i)
-    #     current_combo.pop()
-    #     nums.append(popped_val)
-        
-    #     dfs_helper(i)
+        for value in nums:
+            if value not in current_perm:
+                current_perm.append(value)
+                dfs()
+                current_perm.pop()
+    dfs()
+    return results 
 
-    # dfs_helper(0)
-    # return results
-
-print(permute(nums = [1,2,3]))
+print(permute_dfs(nums = [1,2,3]))
