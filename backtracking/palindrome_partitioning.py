@@ -10,6 +10,8 @@ def parition(s):
 
         # starting at the current index, check to see if all of the remaining substrings are palidroms
         for j in range(i, len(s)):
+            # check if the current substring is a palindrome
+            # if it is, add it to the current partition
             if isPalindrome(s, i, j):
                 current_partition.append(s[i:j+1])
                 dfs_helper(j + 1)
