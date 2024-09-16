@@ -69,6 +69,6 @@ def permutation_in_string(s1, s2):
         left += 1
     return matches == 26
 
-# print(permutation_in_string(s1, s2))
-# print(permutation_in_string(s3, s4))
+print(permutation_in_string(s1, s2))
+print(permutation_in_string(s3, s4))
 print(permutation_in_string(s5, s6))
