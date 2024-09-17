@@ -200,7 +200,7 @@ def max_subarray(nums):
 
 def max_subarray_two_pointer(nums):
     max_sum = nums[0]
-    max_left, max_right = 0, 0
+    left_max, max_right = 0, 0
     current_sum = 0
     left = 0
 
@@ -212,9 +212,9 @@ def max_subarray_two_pointer(nums):
         current_sum += nums[right]
         if current_sum > max_sum:
             max_sum = current_sum
-            max_left, max_right = left, right
+            left_max, max_right = left, right
 
-    return [max_left, max_right]
+    return [left_max, max_right]
 
 # print(max_subarray_two_pointer([4, -1, 2, -7, 3, 4]))
 
@@ -366,26 +366,26 @@ def test_twoSum():
 # Diffiulties
 #   No duplicates are allowed
 def threeSum(nums):
-    sorted_nums = sorted(nums)
+    nums = sorted(nums)
     results = []
 
     # set up loop for outside pointer
-    for outside_index, outside_val in enumerate(sorted_nums):
+    for i, outside_val in enumerate(nums):
         # left_index always starts just inside the outside pointer
-        left_index = outside_index + 1
+        left_index = i + 1
         # right_index always starts at the end of the nums
-        right_index = len(sorted_nums) - 1
+        right_index = len(nums) - 1
 
         # ensure that outside pointer does not run the inner loops for previously checked values
-        if outside_index > 0 and outside_val == sorted_nums[outside_index - 1]:
+        if i > 0 and outside_val == nums[i - 1]:
             continue
 
         # left/right_index should never cross.  
         while left_index < right_index:
 
             # get the vals 
-            left_val = sorted_nums[left_index]
-            right_val = sorted_nums[right_index]
+            left_val = nums[left_index]
+            right_val = nums[right_index]
             total = outside_val + left_val + right_val
 
             # determine whether to move left/right indices
@@ -437,4 +437,83 @@ def maxArea(height):
 
     return global_max, coordinates
 
-print(maxArea([1,8,6,2,5,4,8,3,7]))
+# print(maxArea([1,8,6,2,5,4,8,3,7]))
+
+def trap(height):
+    if not height:
+        return
+
+    water_trapped = 0
+
+    # pointers starting at either end that will move 1 by 1
+    left_index = 0
+    right_index = len(height) - 1
+
+    # max heights, which will be used to find the amount of water that can be trapped by left/right indices
+    left_max = height[left_index]
+    right_max = height[right_index]
+
+
+    # while the pointers do not cross
+    while left_index < right_index:
+
+        # determine which side to move by comparing that max values of left/right
+
+        # if left_max is less than right_max: move the left_index, update the left_max AND update water trapped
+        if left_max < right_max:
+            left_index += 1
+            left_max = max(left_max, height[left_index])
+            # water trapped: This will never be negative as the max value is updated above
+            water_trapped += left_max - height[left_index]
+        else:
+            right_index -= 1
+            right_max = max(right_max, height[right_index])
+            # water trapped
+            water_trapped += right_max - height[right_index]
+
+    return water_trapped
+
+def longestPalindrom(s):
+    longest = 0
+
+def threeSumClosest(nums: list, target: int) -> int:
+    # order nums so you know which direction to move pointers
+    nums.sort()
+    n = len(nums)
+    # Set global distance placeholder
+    closest_sum = float('inf')
+
+    for i in range(n-2):
+        # set the left_index to start just inside the i and the value at left_index
+        left_index = i + 1
+        # set the right_index to the end of the list and the value at right_index
+        right_index = n - 1
+
+        while left_index < right_index:
+            # VALUE CALCULATION MUST GO INSIDE THE LOOPER WHERE POINTERS CHANGE
+            right_value = nums[right_index]
+            left_value = nums[left_index] 
+            triplet_sum = nums[i] + left_value + right_value
+
+            # If the sum is exactly the target, return the sum immediately
+            if triplet_sum == target:
+                return triplet_sum
+
+            # update the global distance if the current distance, triplet sum - target is less than closest_sum - 
+            if abs(triplet_sum - target) < abs(closest_sum - target):
+                closest_sum = triplet_sum
+
+            # move pointers accordingly
+            if triplet_sum > target:
+                right_index -= 1
+            else:
+                left_index += 1
+
+    return closest_sum
+
+# print(threeSumClosest(nums = [-1,2,1,-4], target = 1))
+# print(threeSumClosest(nums = [0,0,0], target = 1))
+# print(threeSumClosest(nums = [0,1,2], target = 3))
+# print(threeSumClosest(nums = [1,1,1,0], target = -100))
+# print(threeSumClosest(nums = [1,1,1,0], target = 100))
+print(threeSumClosest(nums = [4,0,5,-5,3,3,0,-4,-5], target = -2))
