@@ -58,5 +58,34 @@ board2 = [["8","3",".",".","7",".",".",".","."]
 ,[".",".",".","4","1","9",".",".","5"]
 ,[".",".",".",".","8",".",".","7","9"]]
 
-# print(valid_sudoku(board1))
+print(valid_sudoku(board1))
+print(valid_sudoku(board2))
+
+
+def valid_sudoku_II(matrix):
+    column_set = collections.defaultdict(set())
+    row_set = collections.defaultdict(set())
+    matrix_set = collections.defaultdict(set())
+
+    for row in range(9):
+        
+        for column in range(9):
+
+
+            current_value = matrix[row][column]
+
+            if current_value == '.':
+                continue
+
+            if current_value in row_set[row] or current_value in column_set[column] or current_value in matrix_set[row // 3][column // 3]:
+                return False
+            
+            row_set[row].add(current_value)
+            column_set[column].add(current_value)
+            matrix_set[row // 3][column // 3].add(current_value)
+
+    return True
+
+
+print(valid_sudoku(board1))
 print(valid_sudoku(board2))

@@ -14,6 +14,7 @@ def three_sum(input_array):
     for i, element in enumerate(input_array):
         # because they're sorted, if there is a duplicate, it will be the next value
         # this is lieu of using a set to check
+        # this is to check if you just have reached a duplicate, i.e. the previous value was the same for element: element = 2 AND element = 3, nums = [-4, 1, 1, 1, 3 ] 
         if i > 0 and element == input_array[i - 1]:
             continue
         left = i + 1
@@ -29,6 +30,7 @@ def three_sum(input_array):
                 # There may be more than one pair of values that are the inverse of the current value ("element") and thus the pointers need to move
                 # Move left or right, until they are not the same value as previous AND do not cross the other pointer 
                 left += 1
+                # this is to check if you just reached the end of a sequence of duplicates with left: left = 2, nums = [-4, 1, 1, 3 ] 
                 while input_array[left] == input_array[left-1] and left < right:
                     left += 1
     return triplets

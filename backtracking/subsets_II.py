@@ -5,7 +5,6 @@ def subsetsWithDup(nums):
     """
     results = []
     subset = []
-    checket_set = set()
     # sort list
     nums = sorted(nums)
     def dfs(i, current_subset = []):
@@ -17,6 +16,7 @@ def subsetsWithDup(nums):
         # add current value to subet
         # all subsets that include nums[i]
         subset.append(nums[i])
+        # recursively call the dfs 
         dfs(i + 1, subset)
 
         # The main difference between subset I and subset II is that instead of moving just one index, you move until you don't repeat characters
@@ -31,5 +31,4 @@ def subsetsWithDup(nums):
     dfs(0)
     return results
 
-print(subsetsWithDup(nums = [1,2,3]))
-# print(subsetsWithDup(nums = [4,4,4,1,4]))
+print(subsetsWithDup(nums = [1,2,4,2,4]))
