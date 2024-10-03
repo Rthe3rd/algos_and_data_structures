@@ -517,3 +517,88 @@ def threeSumClosest(nums: list, target: int) -> int:
 # print(threeSumClosest(nums = [1,1,1,0], target = -100))
 # print(threeSumClosest(nums = [1,1,1,0], target = 100))
 print(threeSumClosest(nums = [4,0,5,-5,3,3,0,-4,-5], target = -2))
+
+def isValid(s):
+
+    if len(s) == 1:
+        return False
+
+    hash_map = {
+        "}":"{",
+        "]":"[",
+        ")":"(",
+    }
+
+    stack = []
+    for index in range(len(s)):
+        symbol = s[index]
+        if symbol in hash_map:
+            if len(stack) == 0:
+                return False
+            if hash_map[symbol] != stack[-1]:
+                return False
+            stack.pop()
+        else:
+            stack.append(symbol)
+    return not stack
+
+# print(isValid(s = "()"))
+# print(isValid(s = "()[]{}"))
+# print(isValid(s = "(]"))
+# print(isValid(s = "([])"))
+
+class MinStack:
+    def __init__(self):
+        self.all_stack = []
+        self.min_stack = []
+
+    def push(self, val):
+        self.all_stack.append(val)
+        if not self.min_stack:
+            self.min_stack.append(val)
+        elif val <= self.min_stack[-1]:
+                self.min_stack.append(val)
+
+    def pop(self):
+        popped_val = self.all_stack.pop()
+        if popped_val == self.min_stack[-1]:
+            self.min_stack.pop()
+        return popped_val
+
+    def top(self):
+        return self.all_stack[-1]
+
+    def getMin(self):
+        return self.min_stack[-1]
+
+def evalRPN(tokens):
+    vals = []
+
+    for index, token in enumerate(tokens):
+        if token not in "-+/*":
+            token = int(token)
+            vals.append(token)
+
+        else:
+            val2 = int(vals.pop())
+            val1 = int(vals.pop())
+            if token == '+':
+                result = val2 + val1
+            if token == '-':
+                result = val1 - val2
+            if token == '*':
+                result = val2 * val1
+            if token == '/':
+                result = int(val1/val2)
+            vals.append(result)
+
+    return vals[0]
+
+# print(evalRPN(tokens = ["2","1","+","3","*"]))
+# print(evalRPN(tokens = ["4","13","5","/","+"]))
+# print(evalRPN(tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]))
+# print(evalRPN(tokens = ["4","3","-"]))
+
+Output: 9
+Output: 6
+Output: 22

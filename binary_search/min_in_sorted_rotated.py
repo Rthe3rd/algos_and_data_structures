@@ -21,7 +21,7 @@ nums3 = [11,13,15,17]
 # Output: 11
 
 nums4 = [3,1,2]
-
+# Output: 1
 
 
 def min_in_sorted_rotated(nums):
@@ -40,4 +40,23 @@ def min_in_sorted_rotated(nums):
 
     return min_value
 
-print(min_in_sorted_rotated(nums4))
+print(min_in_sorted_rotated(nums2))
+
+def min_in_sorted_rotated_II(nums):
+    left, right = 0, len(nums) - 1
+    min_index = 0
+    while left <= right:
+        mid_index = (left + right)//2
+
+        if nums[mid_index] < nums[-1]:
+            min_index = mid_index
+            right = mid_index - 1
+        else:
+            left = mid_index + 1
+    return nums[min_index]
+
+
+print(min_in_sorted_rotated_II(nums1))
+print(min_in_sorted_rotated_II(nums2))
+print(min_in_sorted_rotated_II(nums3))
+print(min_in_sorted_rotated_II(nums4))
