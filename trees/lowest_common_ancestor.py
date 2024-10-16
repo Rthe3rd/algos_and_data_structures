@@ -30,3 +30,9 @@ class Solution(object):
                 curr = curr.left
             else:
                 return curr
+            
+
+
+root = '3,5,1,6,2,0,8,x,x,7,4'
+root = root.split(",")
+
