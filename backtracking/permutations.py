@@ -43,3 +43,27 @@ def permute_dfs(nums):
     return results 
 
 print(permute_dfs(nums = [1,2,3]))
+
+# This is a redo
+def permutations(nums):
+    results = []
+    current_path = []
+    used_vals = set()
+
+    def dfs():
+        if len(current_path) == len(nums):
+            results.append(current_path.copy())
+            return
+
+        for val in nums:
+            if not val in used_vals:
+                current_path.append(val)
+                used_vals.add(val)
+                dfs()
+                current_path.pop()
+                used_vals.remove(val)
+
+    dfs()
+    return results
+
+print(permutations(nums = [1,2,3]))
