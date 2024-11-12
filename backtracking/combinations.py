@@ -2,21 +2,21 @@
 # You may return the answer in any order.
 
 def combine(n: int, k: int) -> list[list[int]]:
-  results = []
-  current_path = []
+    results = []
+    current_path = []
 
-  def dfs(start):
-      if len(current_path) == k:
-          results.append(current_path.copy())
-          return
+    def dfs(start):
+        if len(current_path) == k:
+            results.append(current_path.copy())
+            return
 
-      for num in range(start, n + 1):
-          current_path.append(num)
-          dfs(num + 1)
-          current_path.pop()
+        for num in range(start, n + 1):
+            current_path.append(num)
+            dfs(num + 1)
+            current_path.pop()
 
-  dfs(1)
-  return results
+    dfs(1)
+    return results
 
 print(combine(n = 4, k = 2))
 
