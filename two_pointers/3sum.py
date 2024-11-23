@@ -13,7 +13,7 @@ def three_sum(input_array):
     input_array = sorted(input_array)
     for i, element in enumerate(input_array):
         # because they're sorted, if there is a duplicate, it will be the next value
-        # this is lieu of using a set to check
+        # this is in lieu of using a set to check
         # this is to check if you just have reached a duplicate, i.e. the previous value was the same for element: element = 2 AND element = 3, nums = [-4, 1, 1, 1, 3 ] 
         if i > 0 and element == input_array[i - 1]:
             continue
